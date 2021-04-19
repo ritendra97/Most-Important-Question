@@ -1,0 +1,73 @@
+//Find smallest range containing elements from k lists
+import java.util.*;
+public class Solution {
+	
+	static int N =5;
+	
+	static void findSmallestRange(int arr[][], int n, int k){
+		
+		int ptr[] = new int[N];
+		for (int i = 0; i <= k; i++) {
+            ptr[i] = 0;
+        }
+		
+		int minval;
+		int maxval;
+		int minele = 0;
+		int maxele = 0;
+		
+		int minrange = Integer.MAX_VALUE;
+		int minind;
+		
+		int flag;
+		
+		while(true) {
+			
+			minind=0;
+			minval = Integer.MAX_VALUE;
+			maxval = Integer.MIN_VALUE;
+			flag=0;
+					
+			for(int i=0;i<k;i++) {
+				
+				if(ptr[i]==n){
+					flag=1;
+					break;
+				}
+				if(ptr[i] <n && arr[i][ptr[i]]<minval) {
+					minind = i;
+					minval = arr[i][ptr[i]];
+				}
+				
+				if(ptr[i] <n && arr[i][ptr[i]]>maxval) {
+					maxval = arr[i][ptr[i]];
+				}
+			}
+			
+			if (flag == 1) {
+                break;
+            }
+			
+			ptr[minind]++;
+			
+			if(maxval-minval<minrange) {
+				
+				maxele = maxval;
+				minele = minval;
+				minrange = maxele-minele;
+			}
+		}
+		System.out.printf("The smallest range is [%d, %d]\n", minele, maxele);
+    }
+	public static void main(String[] args) {
+		
+		int arr[][] = {{ 4,7,9,12,15 },
+	                   { 0,8,10,14,20},
+	                   { 6,12,16,30,50}};
+		
+		int k = arr.length;
+		  
+        findSmallestRange(arr, N, k);
+	}
+
+}
